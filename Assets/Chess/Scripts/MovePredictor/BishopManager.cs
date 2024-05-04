@@ -1,6 +1,5 @@
 using Chess.Scripts.Core;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BishopManager : MonoBehaviour
@@ -11,23 +10,25 @@ public class BishopManager : MonoBehaviour
     public ChessPlayerPlacementHandler placementHandler;
 
     Position currentPos;
-    int maxTiles = 7;
+    float maxTiles = 7.5f;
 
     // These are diagonal limits for the bishop to get the ending of the board
     public GameObject bishopLimits;
 
-    // Start is called before the first frame update
     void Start()
     {
-        placementHandler = GetComponent<ChessPlayerPlacementHandler>();
-
         bishopLimits = GameObject.Find("Limits");
-        StartCoroutine(Wait());
-    }
 
+        placementHandler = GetComponent<ChessPlayerPlacementHandler>();
+        StartCoroutine(Wait());
+
+        // Get Current position from which to move
+        currentPos = placementHandler.CurrentPosition();
+    }
+    
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
         bishopLimits.SetActive(false);
     }
 
@@ -37,9 +38,6 @@ public class BishopManager : MonoBehaviour
         {
             showing = true;
             bishopLimits.SetActive(true);
-
-            // Get Current position from which to move
-            currentPos = placementHandler.CurrentPosition();
 
             // Checking in All Direction and if valid then mark the positions
             CheckDiagonallyUp();
@@ -83,7 +81,7 @@ public class BishopManager : MonoBehaviour
                 }
             }
         }
-      
+
 
         // Checking anticlockwise
         direction = new Vector3(-1, 1, 0);
@@ -111,7 +109,7 @@ public class BishopManager : MonoBehaviour
                 }
             }
         }
-       
+
     }
     void CheckDiagonallyDown()
     {
@@ -170,7 +168,7 @@ public class BishopManager : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
 

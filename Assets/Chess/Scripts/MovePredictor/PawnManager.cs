@@ -17,6 +17,9 @@ public class PawnManager : MonoBehaviour
     void Start()
     {
         placementHandler = GetComponent<ChessPlayerPlacementHandler>();
+
+        // Get Current position from which to move
+        currentPos = placementHandler.CurrentPosition();
     }
 
     private void OnMouseDown()
@@ -24,9 +27,6 @@ public class PawnManager : MonoBehaviour
         if (!showing)
         {
             showing = true;
-
-            // Get Current position from which to move
-            currentPos = placementHandler.CurrentPosition();
 
             // Before Move Check for a pawn is at end or not and if there is any peice is ahead or not
             if (CheckIfValidToMove() && !IsAtEnd())
@@ -54,7 +54,7 @@ public class PawnManager : MonoBehaviour
 
             RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, Vector3.up, out hit, 2))
+            if (Physics.Raycast(transform.position, Vector3.up, out hit, maxTiles))
             {
                 int tiles = Mathf.RoundToInt((hit.collider.transform.position.y - transform.position.y) - 1);
 
@@ -131,7 +131,7 @@ public class PawnManager : MonoBehaviour
 
     bool IsAtEnd()
     {
-        if(currentPos.row == 7)
+        if (currentPos.row == 7)
         {
             return true;
         }

@@ -15,15 +15,15 @@ public class RookManager : MonoBehaviour
     void Start()
     {
         placementHandler = GetComponent<ChessPlayerPlacementHandler>();
+
+        // Get Current position from which to move
+        currentPos = placementHandler.CurrentPosition();
     }
     private void OnMouseDown()
     {
         if (!showing)
         {
             showing = true;
-
-            // Get Current position from which to move
-            currentPos = placementHandler.CurrentPosition();
 
             // Checking in All Direction and if valid then mark the positions
             MarkValidPositionsUp();
@@ -49,30 +49,12 @@ public class RookManager : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.up, out hit, maxTiles))
         {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
+            int tiles = Mathf.RoundToInt((hit.collider.transform.position.y - transform.position.y));
+
+            for (int i = 1; i <= tiles; i++)
             {
-                // If the found thing is enemy
-                // Then highligh tiles till that peice so that that tile will become red
-
-                int tiles = Mathf.RoundToInt((hit.collider.transform.position.y - transform.position.y));
-
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row + i, currentPos.column);
-                    Highlight(temp);
-                }
-            }
-            else
-            {
-                // If the found thing is our piece
-                // Then highligh tiles before that peice
-                int tiles = Mathf.RoundToInt((hit.collider.transform.position.y - transform.position.y) - 1);
-
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row + i, currentPos.column);
-                    Highlight(temp);
-                }
+                Position temp = new Position(currentPos.row + i, currentPos.column);
+                Highlight(temp);
             }
         }
         else
@@ -92,25 +74,12 @@ public class RookManager : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out hit, maxTiles))
         {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                int tiles = Mathf.RoundToInt((transform.position.y - hit.collider.transform.position.y));
+            int tiles = Mathf.RoundToInt((transform.position.y - hit.collider.transform.position.y));
 
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row - i, currentPos.column);
-                    Highlight(temp);
-                }
-            }
-            else
+            for (int i = 1; i <= tiles; i++)
             {
-                int tiles = Mathf.RoundToInt((transform.position.y - hit.collider.transform.position.y) - 1);
-
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row - i, currentPos.column);
-                    Highlight(temp);
-                }
+                Position temp = new Position(currentPos.row - i, currentPos.column);
+                Highlight(temp);
             }
         }
         else
@@ -131,25 +100,12 @@ public class RookManager : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.right, out hit, maxTiles))
         {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                int tiles = Mathf.RoundToInt((hit.collider.transform.position.x - transform.position.x));
+            int tiles = Mathf.RoundToInt((hit.collider.transform.position.x - transform.position.x));
 
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row, currentPos.column + i);
-                    Highlight(temp);
-                }
-            }
-            else
+            for (int i = 1; i <= tiles; i++)
             {
-                int tiles = Mathf.RoundToInt((hit.collider.transform.position.x - transform.position.x) - 1);
-
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row, currentPos.column + i);
-                    Highlight(temp);
-                }
+                Position temp = new Position(currentPos.row, currentPos.column + i);
+                Highlight(temp);
             }
         }
         else
@@ -171,25 +127,12 @@ public class RookManager : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.left, out hit, maxTiles))
         {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
-            {
-                int tiles = Mathf.RoundToInt((transform.position.x - hit.collider.transform.position.x));
+            int tiles = Mathf.RoundToInt((transform.position.x - hit.collider.transform.position.x));
 
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row, currentPos.column - i);
-                    Highlight(temp);
-                }
-            }
-            else
+            for (int i = 1; i <= tiles; i++)
             {
-                int tiles = Mathf.RoundToInt((transform.position.x - hit.collider.transform.position.x) - 1);
-
-                for (int i = 1; i <= tiles; i++)
-                {
-                    Position temp = new Position(currentPos.row, currentPos.column - i);
-                    Highlight(temp);
-                }
+                Position temp = new Position(currentPos.row, currentPos.column - i);
+                Highlight(temp);
             }
         }
         else

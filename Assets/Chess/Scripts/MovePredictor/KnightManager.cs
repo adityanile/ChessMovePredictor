@@ -15,6 +15,9 @@ public class KnightManager : MonoBehaviour
     void Start()
     {
         placementHandler = GetComponent<ChessPlayerPlacementHandler>();
+
+        // Get Current position from which to move
+        currentPos = placementHandler.CurrentPosition();
     }
 
     private void OnMouseDown()
@@ -23,13 +26,10 @@ public class KnightManager : MonoBehaviour
         {
             showing = true;
 
-            // Get Current position from which to move
-            currentPos = placementHandler.CurrentPosition();
-
             // Here we got all possible and valid position where knight can be Now Highlight these areas
             List<Position> pos = GetAllPossiblePositions(currentPos);
 
-            foreach(Position p in pos)
+            foreach (Position p in pos)
             {
                 Highlight(p);
             }
